@@ -1,18 +1,16 @@
 
 # C++-Programming
 
-# Giving support/help
+# Dare supporto/aiuto
 
-These projects very clearly explain you some of the basics of c++ programming and briefly covers all major topics for the beginners. These projects are made to help the understanding of the code for beginners that are practicing. If you want to contribute with this little "hobbie project", simply do a issue report about the syntax if there a mistake, or do a pull request about new functions.
+Questi progetti spiegano molto chiaramente alcune delle basi di programmazione C++ e brevemente copre tutti gli argomenti principali utili per principianti. Questi progetti sono creati per aiutare la pratica e la comprensione dell'argomento per i principianti. Se vuoi contribuire in questo "progetto di svago" invia un Issue quando presente un errore di sintatti, o un Pull Request per la aggiunta di nuove funzioni.
 
-Thank you!!
+Grazie! Buona programmazione!
 
-Happy coding!!
+# Convenzioni
 
-# Conventions
-
-- Global variables are prefixed with `g_`
-- Pointers are prefixed with `p`
+- Variabili globali utilizzano il prefisso `g_`
+- Puntatori utilizzano il prefisso `p`
 
 ![](c++.png)
 
