@@ -1,29 +1,27 @@
 #
-# 'make'        build executable file 'main'
-# 'make clean'  removes all .o and executable files
+# 'make'        Costruisci l'eseguibile per il file "main"
+# 'make clean'  Rimuovi tutti gli eseguibile e file intermedi ".o"
 #
 
-# define the Cpp compiler to use
+# Definisci il compilatore da usare
 CXX = g++
 
-# define any compile-time flags
+# Definisci gli argomenti e bandiere da passare al compilatore
 CXXFLAGS	:= -std=c++17 -Wall -Wextra -g
 
-# define library paths in addition to /usr/lib
-#   if I wanted to include libraries not in /usr/lib I'd specify
-#   their path using -Lpath, something like:
+# Definisci il percorso alle librerie non presenti in /usr/lib utilizzando la bandiera -Lpath
 LFLAGS =
 
-# define output directory
+# Definisci la cartella del risultato
 OUTPUT	:= output
 
-# define source directory
+# Definisci la cartella del sorgente
 SRC		:= src
 
-# define include directory
+# Definisci la cartella dei file di intestazione (file .h*)
 INCLUDE	:= include
 
-# define lib directory
+# Definisci la cartella delle librerie
 LIB		:= lib
 
 ifeq ($(OS),Windows_NT)
@@ -44,31 +42,31 @@ RM = rm -f
 MD	:= mkdir -p
 endif
 
-# define any directories containing header files other than /usr/include
+# Definisci le cartella contenenti i file di intestazione esterni non presenti in /usr/include
 INCLUDES	:= $(patsubst %,-I%, $(INCLUDEDIRS:%/=%))
 
-# define the C libs
+# Definisci il formato delle librerie
 LIBS		:= $(patsubst %,-L%, $(LIBDIRS:%/=%))
 
-# define the C source files
+# Definisci il formato del sorgente
 SOURCES		:= $(wildcard $(patsubst %,%/*.cpp, $(SOURCEDIRS)))
 
-# define the C object files
+# Definisci il formato dei file intermedi
 OBJECTS		:= $(SOURCES:.cpp=.o)
 
-# define the dependency output files
+# Definisci il formato dei file di dipendenza
 DEPS		:= $(OBJECTS:.o=.d)
 
 #
-# The following part of the makefile is generic; it can be used to
-# build any executable just by changing the definitions above and by
-# deleting dependencies appended to the file from 'make depend'
+# La seguente parte del makefile e' generica. Puo' essere usata per
+# Costruire qualsiasi eseguibile cambiando le definizioni precedenti
+# e cancellando qualsiasi dipendenza rimanente utilizzando `make depend`
 #
 
 OUTPUTMAIN	:= $(call FIXPATH,$(OUTPUT)/$(MAIN))
 
 all: $(OUTPUT) $(MAIN)
-	@echo Executing 'all' complete!
+	@echo Esecizione di 'all' completata!
 
 $(OUTPUT):
 	$(MD) $(OUTPUT)
@@ -76,14 +74,14 @@ $(OUTPUT):
 $(MAIN): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(OUTPUTMAIN) $(OBJECTS) $(LFLAGS) $(LIBS)
 
-# include all .d files
+# Includi tutti i file .d
 -include $(DEPS)
 
-# this is a suffix replacement rule for building .o's and .d's from .c's
-# it uses automatic variables $<: the name of the prerequisite of
-# the rule(a .c file) and $@: the name of the target of the rule (a .o file)
-# -MMD generates dependency output files same name as the .o file
-# (see the gnu make manual section about automatic variables)
+# Questo e' una regola di rimpiazzo del suffisso per costruire file .o e .d da file .c*.
+# Utilizza le variabili automatihe $<, il nome del prerecuisito della regola (un file .c*),
+# e $@, il nome dell'obiettivo della regola (un file .o)
+# -MMD genera i file di dipendenza aventi lo stesso nome dei file .o
+# (Per maggiori informazioni consulta il manuale dello strumento GNU Make riguardo le variabili automatiche)
 .cpp.o:
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -MMD $<  -o $@
 
@@ -92,8 +90,8 @@ clean:
 	$(RM) $(OUTPUTMAIN)
 	$(RM) $(call FIXPATH,$(OBJECTS))
 	$(RM) $(call FIXPATH,$(DEPS))
-	@echo Cleanup complete!
+	@echo Pulizia completata!
 
 run: all
 	./$(OUTPUTMAIN)
-	@echo Executing 'run: all' complete!
+	@echo Esecizione di 'run: all' completata!
